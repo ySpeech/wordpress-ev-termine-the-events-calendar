@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=3PW7J5C6R4QC6
 Requires at least: 5.6
 Tested up to: 5.9.2
 Requires PHP: 7.2
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,14 +38,19 @@ INSTALLATION
 4. Füllen Sie die Import Einstellung aus und klicken sie auf \"Speichern\". Der Import startet automatisch.
 5. Wenn Sie eine Premium Lizenz haben fügen sie den Lizenzschlüssel in den Lizenzeinstellungen ein und klicken Sie auf \"Speichern\"
 
+== Screenshots ==
+1. Import Einstellungen
+2. Lizenz Einstellungen
 
 == Frequently Asked Questions ==
 Wieviele Termine werden in der kostenlosen Version importiert?
 * In der kostenfreien Version werden 5 Termine importiert.
 
-== Screenshots ==
-1. Import Einstellungen
-2. Lizenz Einstellungen
+== Drittanbieter Schnittstellen ==
+* ySpeech API ([Datenschutzerklärung]('https://yspeech.de/datenschutz/'))
+  * Das Plugin kommuniziert mit der ySpeech API für die Aufbereitung und den Import der Termine.
+  * Das Plugin nutzt die ySpeech API um Ihre Lizenzschlüssel zu aktivieren und deren Status zu überprüfen.
+
 
 == Changelog ==
 0.0.1 Initiale Version des Plugins

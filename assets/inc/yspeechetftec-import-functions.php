@@ -9,7 +9,6 @@ function yspeechetftec_import_events()
 {
     $yspeechetftec_options = get_option('yspeechetftec_option_name');
 
-
     $uri_params = '';
 
     if (isset($yspeechetftec_options['yspeechetftec_organizer_ids']) && strlen(trim($yspeechetftec_options['yspeechetftec_organizer_ids'])) > 0) {

@@ -104,7 +104,7 @@ class YSPEECHETFTEC_Admin
 
         //Get the active tab from the $_GET param
         $default_tab = null;
-        $tab = isset($_GET['tab']) ? (string) $_GET['tab'] : $default_tab;
+        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : $default_tab;
 
 ?>
 

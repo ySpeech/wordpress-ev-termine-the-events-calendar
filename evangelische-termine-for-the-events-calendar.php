@@ -2,7 +2,7 @@
 /*
 Plugin Name: Evangelische Termine for The Events Calendar
 Description: Plugin zum import von Ev Termine. Das The Events Calendar Plugin sollte installiert und aktiviert sein um dieses Plugin zu verwenden.
-Version: 0.0.2
+Version: 0.0.3
 Requires at least: 5.6
 Requires PHP: 7.2
 License: GPLv3

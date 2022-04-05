@@ -16,6 +16,9 @@ function yspeechetftec_import_events()
         $uri_params = $uri_params . 'vids=' . $yspeechetftec_options['yspeechetftec_organizer_ids'];
     }
     if (isset($yspeechetftec_options['yspeechetftec_region_ids']) && strlen(trim($yspeechetftec_options['yspeechetftec_region_ids'])) > 0) {
+        if (strlen($uri_params) > 0) {
+            $uri_params = $uri_params . '&';
+        }
         $uri_params = $uri_params . 'regions=' . $yspeechetftec_options['yspeechetftec_region_ids'];
     }
 
@@ -24,10 +27,12 @@ function yspeechetftec_import_events()
 
         try {
             if (isset($yspeechetftec_options['yspeechetftec_license_key']) && strlen(trim($yspeechetftec_options['yspeechetftec_license_key'])) > 0) {
-                $uri_params = $uri_params . 'license=' . $yspeechetftec_options['yspeechetftec_license_key'];
+                $uri_params = $uri_params . '&license=' . $yspeechetftec_options['yspeechetftec_license_key'];
             }
+
             $response = wp_remote_get(
-                YSPEECHTFTEC_ET_XML_BASE_URL  . $uri_params,
+                YSPEECHTFTEC_ET_XML_BASE_URL  . $uri_params
+                    . '&X-API-Key=' . YSPEECHETFTEC_YSPEECH_LICENSE_API_APPLICATION_AUTH,
                 array(
                     'timeout' => 30,
                     'redirection' => 10,
@@ -35,7 +40,6 @@ function yspeechetftec_import_events()
                     'httpversion' => 1.1,
                     'headers' => array(
                         'Content-Type'  => 'application/json',
-                        'Authorization' => YSPEECHETFTEC_YSPEECH_API_AUTH
                     )
                 )
             );
@@ -57,6 +61,20 @@ function yspeechetftec_import_events()
                                 $term = wp_insert_term($cat, Tribe__Events__Main::TAXONOMY);
                             }
                             array_push($hierarchicalTerms, $term['term_id']);
+                        }
+                    }
+
+                    if (isset($event->Organizer)) {
+                        $rd_args = array(
+                            'post_type' => 'tribe_organizer',
+                            'numberposts' => -1,
+                            'title' => (string) $event->Organizer->Organizer,
+                        );
+
+                        $rd_query = get_posts($rd_args);
+
+                        if (count($rd_query) === 1) {
+                            $event->Organizer->OrganizerID = $rd_query[0]->ID;
                         }
                     }
 

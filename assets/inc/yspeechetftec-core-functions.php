@@ -12,9 +12,9 @@ if (!defined('WPINC')) {
 } // end if
 
 define('ET_DONATION_URL', 'https://www.paypal.com/donate/?hosted_button_id=3PW7J5C6R4QC6&locale.x=de_DE');
-define('YSPEECHETFTEC_YSPEECH_LICENSE_BASE_URL', 'https://yspeech.de/wp-json/lmfwc/v2/licenses/');
+define('YSPEECHETFTEC_YSPEECH_LICENSE_BASE_URL', 'https://yspeech.de/wp-json/yeta/v1/license/info');
 define('YSPEECHETFTEC_YSPEECH_BASE_URL', 'https://yspeech.de/');
-define('YSPEECHETFTEC_YSPEECH_API_AUTH', 'Basic ' . base64_encode('ck_da85e37cfb901c692ada8a1aa0fecedc5b4f1805:cs_5a1db144db15362dc3b6fdeba3814d4853e80619'));
+define('YSPEECHETFTEC_YSPEECH_LICENSE_API_APPLICATION_AUTH', 'muDQ9zoBjizIbRiiHEr5WcWi0MNDEMFTKkH2YBRNvEWKvebFGMijWzWZKZHIlfj9NX4ryEWoqUayqrfVxPm2dPJaFU5rRCEZTOPzpSw1gMn7CQv6qzdgm9jKombfrNGw');
 
 
 function yspeechetftec_cron_exec()
@@ -121,8 +121,8 @@ class YSPEECHETFTEC_Admin
                 <?php switch ($tab):
                     case 'license':
 
-                        echo (esc_html('<form method="post" action="options.php">'));
-                        echo (esc_html('<input type="hidden" name="sent" value="1" /> '));
+                        echo ('<form method="post" action="options.php">');
+                        echo ('<input type="hidden" name="sent" value="1" /> ');
 
                         settings_fields('yspeechetftec_license_group');
                         do_settings_sections('yspeechetftec-settings-license');
@@ -155,8 +155,8 @@ class YSPEECHETFTEC_Admin
 
                         break;
                     default:
-                        echo (esc_html('<form method="post" action="options.php">'));
-                        echo (esc_html('<input type="hidden" name="sent" value="1" /> '));
+                        echo ('<form method="post" action="options.php">');
+                        echo ('<input type="hidden" name="sent" value="1" /> ');
 
                         settings_fields('yspeechetftec_import_group');
                         do_settings_sections('yspeechetftec-settings-import');
@@ -273,9 +273,9 @@ class YSPEECHETFTEC_Admin
     {
         $next_scheduled = wp_next_scheduled('yspeechetftec_cron_hook');
         if ($next_scheduled != false && $next_scheduled > 0) {
-            echo esc_html(('<div class="info"><strong>Nächster automatischer Import: </strong>'
-                . date("d.m.Y H:i:s", wp_next_scheduled('yspeechetftec_cron_hook'))
-                . ' UTC</div>'));
+            echo ('<div class="info"><strong>Nächster automatischer Import: </strong>'
+                . esc_html(date("d.m.Y H:i:s", wp_next_scheduled('yspeechetftec_cron_hook')))
+                . ' UTC</div>');
         }
     }
 
@@ -283,35 +283,35 @@ class YSPEECHETFTEC_Admin
     {
         $users = get_users(array('role__in' => array('administrator', 'editor', 'author')));
 
-        echo esc_html(('<select name="yspeechetftec_import[yspeechetftec_publisher_id]" id="yspeechetftec_publisher_id">'));
+        echo ('<select name="yspeechetftec_import[yspeechetftec_publisher_id]" id="yspeechetftec_publisher_id">');
         foreach ($users as $user) {
             if (isset($this->yspeechetftec_import['yspeechetftec_publisher_id']) && $this->yspeechetftec_import['yspeechetftec_publisher_id'] == $user->ID) {
-                echo esc_html(('<option value="' . esc_html($user->ID) . '" selected>' . esc_html($user->display_name) . '</option>'));
+                echo ('<option value="' . esc_html($user->ID) . '" selected>' . esc_html($user->display_name) . '</option>');
             } else {
-                echo esc_html(('<option value="' . esc_html($user->ID) . '">' . esc_html($user->display_name) . '</option>'));
+                echo ('<option value="' . esc_html($user->ID) . '">' . esc_html($user->display_name) . '</option>');
             }
         }
-        echo esc_html(('</select>'));
+        echo ('</select>');
     }
 
     public function yspeechetftec_organizer_ids_callback()
     {
-        printf(esc_html(
+        printf(
             '<input class="regular-text" type="text" name="yspeechetftec_import[yspeechetftec_organizer_ids]" id="yspeechetftec_organizer_ids" value="%s">
             <label class="screen-reader-text">' . __('Die Veranstalter IDs kommaseperiert. Zum Beispiel: 123 Komma 456', 'yspeechetftec') . '</label>
             <p class="tooltip description">' . __('Die Veranstalter IDs kommaseperiert (z.B. "123, 456").', 'yspeechetftec') . '</p>',
             isset($this->yspeechetftec_import['yspeechetftec_organizer_ids']) ? esc_attr($this->yspeechetftec_import['yspeechetftec_organizer_ids']) : ''
-        ));
+        );
     }
 
     public function yspeechetftec_region_ids_callback()
     {
-        printf(esc_html(
+        printf(
             '<input class="regular-text" type="text" name="yspeechetftec_import[yspeechetftec_region_ids]" id="yspeechetftec_region_ids" value="%s">
             <label class="screen-reader-text">' . __('Die Region IDs kommaseperiert. Zum Beispiel: 123 Komma 456', 'yspeechetftec') . '</label>
             <p class="tooltip description">' . __('Die Region IDs kommaseperiert (z.B. "123, 456").', 'yspeechetftec') . '</p>',
             isset($this->yspeechetftec_import['yspeechetftec_region_ids']) ? esc_attr($this->yspeechetftec_import['yspeechetftec_region_ids']) : ''
-        ));
+        );
     }
 
     public function yspeechetftec_license_key_callback()
@@ -324,12 +324,12 @@ class YSPEECHETFTEC_Admin
                 $icon = '&#8855;';
             }
         }
-        printf(esc_html(
+        printf(
             '<input class="regular-text" type="text" name="yspeechetftec_license[yspeechetftec_license_key]" id="yspeechetftec_license_key" value="%s"><i class="yspeechetftec-suffix-icon">' . $icon . '</i>
             <label class="screen-reader-text">' . __('Lizenzschlüssel um Zusatzfunktionen freizuschalten.', 'yspeechetftec') . '</label>
             <p class="tooltip description">' . __('Lizenzschlüssel um Zusatzfunktionen freizuschalten', 'yspeechetftec') . '</p>',
             isset($this->yspeechetftec_license['yspeechetftec_license_key']) ? esc_attr($this->yspeechetftec_license['yspeechetftec_license_key']) : ''
-        ));
+        );
     }
 
     /**
@@ -341,67 +341,32 @@ class YSPEECHETFTEC_Admin
     public function yspeechetftec_check_license($license_key)
     {
         $res = false;
-        try {
-            $response = wp_remote_get(
-                YSPEECHETFTEC_YSPEECH_LICENSE_BASE_URL . $license_key,
-                array(
-                    'timeout' => 30,
-                    'redirection' => 10,
-                    'method' => 'GET',
-                    'httpversion' => 1.1,
-                    'headers' => array(
-                        'Content-Type'  => 'application/json',
-                        'Authorization' => YSPEECHETFTEC_YSPEECH_API_AUTH
+        if (isset($license_key)) {
+            try {
+                $response = wp_remote_get(
+                    YSPEECHETFTEC_YSPEECH_LICENSE_BASE_URL . '?license=' . $license_key . '&X-API-Key=' . YSPEECHETFTEC_YSPEECH_LICENSE_API_APPLICATION_AUTH,
+                    array(
+                        'timeout' => 10,
+                        'redirection' => 10,
+                        'method' => 'GET',
+                        'httpversion' => 1.1,
+                        'headers' => array(
+                            'Content-Type'  => 'application/json',
+                        )
                     )
-                )
-            );
-            $response_body = json_decode(wp_remote_retrieve_body($response));
-            $license = $response_body->data;
-            $response_code = wp_remote_retrieve_response_code($response);
-            if ($response_code === 404) {
-                $res = false;
-            } else if ($response_code === 200) {
-                if (
-                    $license->timesActivated > 0
-                    && $license->timesActivated <= $license->timesActivatedMax
-                    && $license->productId == 782
-                ) {
+                );
+                $response_code = wp_remote_retrieve_response_code($response);
+                if ($response_code === 200) {
                     $res = true;
-                } elseif (
-                    $license->timesActivated < $license->timesActivatedMax
-                    && $license->productId == 782
-                ) {
-                    $this->yspeechetftec_activate_license($license_key);
-                    $res = $this->yspeechetftec_check_license($license_key);
+                } else {
+                    $res = false;
                 }
-            } else {
+            } catch (Exception $err) {
+                echo (esc_html("<hr>Error #:" . $err));
                 $res = false;
             }
-        } catch (Exception $err) {
-            echo (esc_html("<hr>Error #:" . $err));
-            $res = false;
         }
         return $res;
-    }
-    public function yspeechetftec_activate_license($license_key)
-    {
-        try {
-            wp_remote_get(
-                YSPEECHETFTEC_YSPEECH_LICENSE_BASE_URL . 'activate/' . $license_key,
-                array(
-                    'timeout' => 30,
-                    'redirection' => 10,
-                    'method' => 'GET',
-                    'httpversion' => 1.1,
-                    'headers' => array(
-                        'Content-Type'  => 'application/json',
-                        'Authorization' => YSPEECHETFTEC_YSPEECH_API_AUTH
-                    )
-                )
-            );
-        } catch (Exception $e) {
-            echo (esc_html("<hr>Error #:" . $e));
-        }
     }
 }
 if (is_admin()) {
